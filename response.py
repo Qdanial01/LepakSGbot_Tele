@@ -31,25 +31,36 @@ def handle_response(text:str) -> str:
     
     words = processed.split() # Split the input into words
     
-    # Extract town and category (if any input provided)
-    town = words[0]
-    category = words[1] if len(words) > 1 else None
+    # Handle towns with more than one word
+    town = None
+    category = None
 
-    if town in lepak_locations:
-        categories =lepak_locations[town] # Retrieve available categories for input town
+    #Tries matching town first
+    for i in range(len(words)):
+        possible_town = ' '.join(words[:i+1]) #This joins words from the start to i-th word
+        if possible_town in lepak_locations:
+            town = possible_town
+            category = ' '.join(words[i+1:]) #Takes the remaining words as category
+            break
+
+    if not town:
+        return choice(["Im not sure where that is, my developer half fuck my code so my process is a bit limited.",
+                   'I do not understand what you wrote....', 'I don\'t recognize that town. Please try again!'])
+    
+    categories = lepak_locations[town] # Retrieve available categories for the input town
 
         # If user input a category, check if category is valid
-        if category and category in categories:
-            place = choice(categories[category]) # Random place is chosen within that specified category
+    if category and category in categories:
+        place = choice(categories[category]) # Random place is chosen within that specified category
 
-        else:
+    else:
             # Pick random category and a place from that category
             random_category = choice(list(categories.keys())) # A spot is chosen at random depending on the selected town
             place = choice(categories[random_category])
 
 
-        message = choice(Reply_List).format(place) # Format with a pre-written reply
-        return message
+    message = choice(Reply_List).format(place) # Format with a pre-written reply
+    
+    return message
 
-    return choice(["Im not sure where that is, my developer half fuck my code so my process is a bit limited.",
-                   'I do not understand what you wrote....'])
+
