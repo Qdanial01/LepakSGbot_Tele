@@ -16,12 +16,12 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text('Hello! Looking for somewhere to lepak?')
 
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text('Type a town and I\'ll give you a recommendation!')
+    await update.message.reply_text('Type a town and I\'ll give you a recommendation! Not sure what are the available towns? Type \'\Towns\' for a list!')
 
-async def custom_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text('This is a custom command')
+async def towns_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text('These are the available towns')
 
-
+#Responses prepared in response.py
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     message_type: str = update.message.chat.type
     text: str = update.message.text
@@ -51,7 +51,7 @@ if __name__ == '__main__':
     #Commands
     app.add_handler(CommandHandler('start', start_command))
     app.add_handler(CommandHandler('help', help_command))
-    app.add_handler(CommandHandler('custom', custom_command))
+    app.add_handler(CommandHandler('towns', towns_command))
 
     #Messages
     app.add_handler(MessageHandler(filters.TEXT, handle_message))
