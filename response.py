@@ -6,19 +6,9 @@ import json
 with open('lepak_locations.json', 'r', encoding='utf-8') as file:
     lepak_locations = json.load(file)
 
-#Pre-generated message list
-Reply_List = [
-    "{} seems like a great option for today!",
-    "How about checking out {}? It's a great place to chill!",
-    "{} could be fun spot to rest and relax!",
-    "I heard {} is a great place to go!",
-    "Maybe try {}? It's a popular choice for some people!",
-    "If you're looking for something to just lepak, {} is one of the recommended picks!",
-    "{} sounds like a cozy place to just chill!",
-    "I would suggest going to {}!",
-    "{} is a good spot!",
-    "{} is a great place to relax!"
-]
+#Load pre-generated message list from replies.json
+with open('replies.json', 'r', encoding='utf-8') as file:
+    replies = json.load(file)
 
 def handle_response(text:str) -> str:
     processed: str = text.lower().strip()
@@ -59,7 +49,7 @@ def handle_response(text:str) -> str:
             place = choice(categories[random_category])
 
 
-    message = choice(Reply_List).format(place) # Format with a pre-written reply
+    message = choice(replies).format(place) # Format with a pre-written reply
     
     return message
 
