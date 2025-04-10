@@ -1,14 +1,15 @@
 from random import choice
 import json
 
-#Load JSON data from lepak_locations.json
+#Load JSON data from lepak_locations.json and replies.json
 # "r" opens file in read mode
 with open('lepak_locations.json', 'r', encoding='utf-8') as file:
     lepak_locations = json.load(file)
 
-#Load pre-generated message list from replies.json
 with open('replies.json', 'r', encoding='utf-8') as file:
     replies = json.load(file)
+
+
 
 def handle_response(text:str) -> str:
     processed: str = text.lower().strip()
