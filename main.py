@@ -3,9 +3,15 @@ import os
 from dotenv import load_dotenv
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
+import json
 
-#Import handle_response from bot_response.py
 from response import handle_response
+
+#Load towns for town command
+with open('towns.json', 'r', encoding='utf-8') as file:
+    towns = json.load(file)
+
+
 
 load_dotenv()
 Bot_Token: Final[str] = os.getenv('Bot_Token')
@@ -16,10 +22,11 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text('Hello! Looking for somewhere to lepak?')
 
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text('Type a town and I\'ll give you a recommendation! Not sure what are the available towns? Type \'\Towns\' for a list!')
+    await update.message.reply_text('Type a town and I\'ll give you a recommendation! Not sure what are the available towns? Type \'/Towns\' for a list!')
 
 async def towns_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text('These are the available towns')
+    towns_list = '\n'.join(towns) #Joins all the towns in the list with a newline
+    await update.message.reply_text('These are the available towns:\n' + towns_list)
 
 #Responses prepared in response.py
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
