@@ -35,8 +35,8 @@ def handle_response(text:str) -> str:
             break
 
     if not town:
-        return choice(["Im not sure where that is, my developer half fuck my code so my process is a bit limited.",
-                   'I do not understand what you wrote....', 'I don\'t recognize that town. Please try again!'])
+        return choice(['I don\'t think I know places for that town','Please try another town', 'I don\'t recognize that town. Please try again!',
+                       'Not sure where that is.... you could check in /towns for the list of places I support!','Not sure about spots for that place.. maybe try something else?'])
     
     categories = lepak_locations[town] # Retrieve available categories for the input town
 
