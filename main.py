@@ -1,5 +1,6 @@
 from typing import Final
 import os
+from random import choice
 from dotenv import load_dotenv
 from telegram import Update
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
@@ -38,6 +39,11 @@ async def towns_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     reply_markup = InlineKeyboardMarkup(keyboard)
     await update.message.reply_text('These are the available towns:', reply_markup=reply_markup)
 
+async def random_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    town = choice(towns)
+    random_response = handle_response(town)
+    await update.message.reply_text(random_response)
+
 #Responses prepared in response.py
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     message_type: str = update.message.chat.type
@@ -60,6 +66,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def error(update: Update, context: ContextTypes.DEFAULT_TYPE):
     print(f'Update {update} caused error {context.error}')
 
+#Button Handler for /list command
 async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
@@ -68,6 +75,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     response = handle_response(town_selected)
 
     await query.edit_message_text(text=response)
+    
 
 
 if __name__ == '__main__':
@@ -79,6 +87,7 @@ if __name__ == '__main__':
     app.add_handler(CommandHandler('help', help_command))
     app.add_handler(CommandHandler('example', example_command))
     app.add_handler(CommandHandler('towns', towns_command))
+    app.add_handler(CommandHandler('random', random_command))
 
     #Messages
     app.add_handler(MessageHandler(filters.TEXT, handle_message))
