@@ -3,6 +3,7 @@
         "Ang Mo Kio",
         "Bedok",
         "Bishan",
+        "Bugis",
         "Bukit Batok",
         "Bukit Merah",
         "Bukit Panjang",
@@ -24,6 +25,9 @@
         "Serangoon",
         "Tampines",
         "Toa Payoh",
+        "Tengah",
+        "West Coast",
+        "Whampoa",
         "Woodlands",
         "Yishun"
 ]

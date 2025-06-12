@@ -28,7 +28,7 @@ def handle_response(text:str) -> str:
 
     #Tries matching town first
     for i in range(len(words)):
-        possible_town = ' '.join(words[:i+1]) #This joins words from the start to i-th word
+        possible_town = ' '.join(words[:i+1]) #Joins the words from the start to i-th word
         if possible_town in lepak_locations:
             town = possible_town
             category = ' '.join(words[i+1:]) #Takes the remaining words as category
